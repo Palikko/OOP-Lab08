@@ -5,10 +5,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,9 +45,36 @@ public class BadIOGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        final JPanel myPanel = new JPanel();
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.X_AXIS));
+        final JButton read = new JButton("Read");
+        myPanel.add(write, BorderLayout.CENTER);
+        myPanel.add(read);
+
+        frame.setContentPane(myPanel);
+
+
         /*
          * Handlers
          */
+        read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try (BufferedReader buffer = new BufferedReader(new FileReader(PATH))) {
+                    System.out.println(buffer.readLine());
+                } catch (FileNotFoundException e2) {
+                    JOptionPane.showMessageDialog(frame, e2, "Error", JOptionPane.ERROR_MESSAGE);
+                    e2.printStackTrace();
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -62,6 +93,7 @@ public class BadIOGUI {
                 }
             }
         });
+
     }
 
     private void display() {
@@ -86,13 +118,18 @@ public class BadIOGUI {
         /*
          * OK, ready to pull the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
+
+ 
+
 
     /**
      * @param args ignored
      */
     public static void main(final String... args) {
        new BadIOGUI().display();
+
     }
 }
