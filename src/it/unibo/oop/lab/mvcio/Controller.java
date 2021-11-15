@@ -1,5 +1,16 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import it.unibo.oop.lab.iogui.BadIOGUI;
+
 /**
  * 
  */
@@ -28,4 +39,23 @@ public class Controller {
      * to a software that runs correctly on every platform.
      */
 
+
+    private static final String PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + "output.txt";
+
+    public Controller() {
+    }
+
+    public static void readFile() {
+
+    }
+
+    /**
+     * @return
+     *          Path file
+     */
+    public String getPath() {
+        return Controller.PATH;
+    }
 }
