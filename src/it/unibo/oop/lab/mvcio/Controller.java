@@ -1,8 +1,11 @@
 package it.unibo.oop.lab.mvcio;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
@@ -44,18 +47,34 @@ public class Controller {
             + System.getProperty("file.separator")
             + "output.txt";
 
-    public Controller() {
+    private final File output = new File(PATH);
+
+    /**
+     * @return
+     *          Name file
+     */
+    public String getFile() {
+        return output.getName();
     }
-
-    public static void readFile() {
-
-    }
-
     /**
      * @return
      *          Path file
      */
     public String getPath() {
-        return Controller.PATH;
+        return output.getPath();
     }
+    /**
+     * @param input
+     *              the user input that will be save in output.txt
+     */
+    public void input(final String input) {
+
+       try (BufferedWriter w = new BufferedWriter(new FileWriter(getPath()))) {
+        w.write(input);
+       } catch (IOException e) {
+        e.printStackTrace();
+       }
+
+    }
+
 }
