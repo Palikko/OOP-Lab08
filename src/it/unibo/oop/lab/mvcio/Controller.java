@@ -47,27 +47,27 @@ public class Controller {
             + System.getProperty("file.separator")
             + "output.txt";
 
-    private final File output = new File(PATH);
+    private final static File output = new File(PATH);
 
     /**
      * @return
-     *          Name file
+     *          File
      */
-    public String getFile() {
-        return output.getName();
+    public static File getFile() {
+        return output;
     }
     /**
      * @return
      *          Path file
      */
-    public String getPath() {
+    public static String getPath() {
         return output.getPath();
     }
     /**
      * @param input
      *              the user input that will be save in output.txt
      */
-    public void input(final String input) {
+    public static void input(final String input) {
 
        try (BufferedWriter w = new BufferedWriter(new FileWriter(getPath()))) {
         w.write(input);
