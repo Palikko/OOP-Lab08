@@ -46,6 +46,8 @@ public final class SimpleGUI {
      */
     public SimpleGUI() {
         
+        final Controller c = new Controller();
+        
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
         
@@ -61,7 +63,7 @@ public final class SimpleGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                Controller.input(textBox.getText());
+                c.input(textBox.getText());
             }
         });
         /*

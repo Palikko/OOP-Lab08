@@ -43,31 +43,40 @@ public class Controller {
      */
 
 
-    private static final String PATH = System.getProperty("user.home")
+            private String path = System.getProperty("user.home")
             + System.getProperty("file.separator")
             + "output.txt";
 
-    private final static File output = new File(PATH);
+    private File output = new File(path);
 
     /**
      * @return
      *          File
      */
-    public static File getFile() {
-        return output;
+    public File getFile() {
+        return this.output;
+    }
+
+    /**
+     * @param namefile
+     *                  name file
+     */
+    public void setPath(final File namefile) {
+        this.output = namefile;
+
     }
     /**
      * @return
      *          Path file
      */
-    public static String getPath() {
-        return output.getPath();
+    public String getPath() {
+        return this.output.getPath();
     }
     /**
      * @param input
      *              the user input that will be save in output.txt
      */
-    public static void input(final String input) {
+    public void input(final String input) {
 
        try (BufferedWriter w = new BufferedWriter(new FileWriter(getPath()))) {
         w.write(input);
@@ -76,5 +85,7 @@ public class Controller {
        }
 
     }
+
+
 
 }

@@ -1,5 +1,22 @@
 package it.unibo.oop.lab.mvcio2;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import it.unibo.oop.lab.mvcio.Controller;
+
+
 /**
  * A very simple program using a graphical interface.
  * 
@@ -32,4 +49,76 @@ public final class SimpleGUIWithFileChooser {
      * try to keep things separated.
      */
 
+    private final JFrame frame = new JFrame("Good title!");
+
+        public SimpleGUIWithFileChooser() {
+
+        final Controller b = new Controller();
+ 
+
+        final JPanel canvas = new JPanel();
+        canvas.setLayout(new BorderLayout());
+
+        frame.setContentPane(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        final JTextArea textBox = new JTextArea();
+        canvas.add(textBox, BorderLayout.CENTER);
+
+        final JButton write = new JButton("Save");
+        canvas.add(write, BorderLayout.SOUTH);
+
+        write.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                b.input(textBox.getText());
+            }
+        });
+
+        final JPanel second = new JPanel();
+        second.setLayout(new BorderLayout());
+        canvas.add(second, BorderLayout.NORTH);
+
+        final JTextField field = new JTextField();
+        field.setEditable(false);
+        field.setText(b.getPath());
+        second.add(field, BorderLayout.CENTER);
+
+        final JButton button = new JButton("browse...");
+        second.add(button, BorderLayout.LINE_END);
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final JFileChooser jFileChooser = new JFileChooser();
+                if (jFileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    b.setPath(jFileChooser.getSelectedFile());
+                    field.setText(b.getPath());
+
+                } else if (jFileChooser.isAcceptAllFileFilterUsed()) {
+                    JOptionPane.showMessageDialog(null, "an error has ocurred");
+                }
+
+            }
+        });
+
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+
+        frame.setSize(sw / 2, sh / 2);
+
+        frame.setLocationByPlatform(true);
+
+        frame.setVisible(true);
+    }
+
+    public static void main(final String[] args) {
+
+        new SimpleGUIWithFileChooser();
+
+    }
+
 }
+
+
